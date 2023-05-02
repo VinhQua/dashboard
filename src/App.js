@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
-
+import {  Link, Route, Routes } from "react-router-dom";
+import TopBar from "./scenes/global/TopBar";
+import { colorModeContext, useMode } from "./theme";
+import { Button, CssBaseline,ThemeProvider } from "@mui/material";
+import DashBoard from "./scenes/dashboard";
+import SideBar from "./scenes/global/SideBar";
+import { useState } from "react";
+import Team from "./scenes/team";
+import Contact from "./scenes/contact";
+import Invoice from "./scenes/invoice";
+import Form from "./scenes/form-profile";
+import Calendar from "./scenes/calendar";
+import FAQ from "./scenes/faq";
+import BarChart from "./components/BarChart";
+import Footer from "./scenes/global/Footer";
 function App() {
+  const [theme,colorMode] =useMode();
+  const [isSidebar,setIsSidebar] = useState(true);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <colorModeContext.Provider value={colorMode} >
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+              <div className="app">
+                  <SideBar isSidebar={isSidebar}/>                
+                <main className="content">
+                  <TopBar setIsSidebar={setIsSidebar}/>
+                  <Routes>
+                    <Route path="/" element={<Team/>} />
+                    <Route path="/team" element={<Team />} />
+                    <Route path="/contacts" element={<Contact />} />
+                    <Route path="/invoice" element={<Invoice />} />
+                    <Route path="/form" element={<Form />} />
+                    <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    {/* <Route path="/barchart" element={<BarChart />} /> */}
+                  </Routes>
+  \
+                </main>
+               
+              </div>
+    </ThemeProvider>
+
+  </colorModeContext.Provider>
+
   );
 }
 
